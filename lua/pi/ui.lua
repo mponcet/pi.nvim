@@ -14,7 +14,8 @@ local function has_rich_notify()
   if _G.__pi_force_notify_backend then
     return true
   end
-  return package.loaded.notify ~= nil or pcall(require, "notify")
+  local info = debug.getinfo(vim.notify, "S")
+  return type(vim.notify) == "function" and not info.source:match("vim/(_core/)?editor")
 end
 
 local function is_session_window_valid(session)
