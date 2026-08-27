@@ -15,7 +15,7 @@ local function has_rich_notify()
     return true
   end
   local info = debug.getinfo(vim.notify, "S")
-  return type(vim.notify) == "function" and not info.source:match("vim/(_core/)?editor")
+  return type(vim.notify) == "function" and not info.source:match("vim/(_core/)?editor") and not info.source:match("vim.lua")
 end
 
 local function is_session_window_valid(session)
