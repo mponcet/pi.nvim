@@ -15,6 +15,7 @@ M.defaults = {
   provider = nil,
   model = nil,
   thinking = "off",
+  tools = nil,
   system_prompt = nil,
   append_system_prompt = nil,
   context = {

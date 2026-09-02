@@ -65,6 +65,10 @@ function M.get_cmd()
         table.insert(cmd, "--thinking")
         table.insert(cmd, cfg.thinking)
     end
+    if cfg.tools and #cfg.tools > 0 then
+        table.insert(cmd, "--tools")
+        table.insert(cmd, table.concat(cfg.tools, ","))
+    end
     if cfg.system_prompt then
         table.insert(cmd, "--system-prompt")
         table.insert(cmd, cfg.system_prompt)
