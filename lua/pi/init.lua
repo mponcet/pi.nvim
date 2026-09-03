@@ -66,7 +66,7 @@ function M.get_cmd()
         table.insert(cmd, cfg.thinking)
     end
     if cfg.tools then
-        local tools = { "read", "edit" }
+        local tools = { "read", "edit", "write" }
         for _, tool in ipairs(cfg.tools) do
             if not vim.tbl_contains(tools, tool) then
                 table.insert(tools, tool)
