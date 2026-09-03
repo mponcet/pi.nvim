@@ -65,9 +65,15 @@ function M.get_cmd()
         table.insert(cmd, "--thinking")
         table.insert(cmd, cfg.thinking)
     end
-    if cfg.tools and #cfg.tools > 0 then
+    if cfg.tools then
+        local tools = { "read", "edit" }
+        for _, tool in ipairs(cfg.tools) do
+            if not vim.tbl_contains(tools, tool) then
+                table.insert(tools, tool)
+            end
+        end
         table.insert(cmd, "--tools")
-        table.insert(cmd, table.concat(cfg.tools, ","))
+        table.insert(cmd, table.concat(tools, ","))
     end
     if cfg.system_prompt then
         table.insert(cmd, "--system-prompt")

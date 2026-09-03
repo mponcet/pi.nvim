@@ -603,6 +603,18 @@ local function test_append_system_prompt_is_concatenated()
   MiniTest.expect.no_equality(cmd[append_idx + 1]:match("Always run tests"), nil)
 end
 
+local function test_append_default_tools()
+  setup_test_env('require("pi").setup({ tools = { "bash" } })')
+  setup_buffer({ "code" }, "/test/file.lua")
+
+  local system = run_pi_ask("test")
+  local cmd = system.get_cmd()
+  local append_idx = has_arg(cmd, "--tools")
+
+  MiniTest.expect.no_equality(append_idx, nil)
+  MiniTest.expect.equality(cmd[append_idx + 1], "read,edit,bash")
+end
+
 local function test_second_request_is_blocked_while_running()
   setup_test_env()
   setup_buffer({ "code" }, "/test/file.lua")
@@ -933,6 +945,7 @@ T["PiAsk"]["default thinking is off"] = test_default_thinking_is_off
 T["PiAsk"]["thinking option adds cli flag"] = test_thinking_option_adds_cli_flag
 T["PiAsk"]["invalid thinking option errors"] = test_invalid_thinking_option_errors
 T["PiAsk"]["append_system_prompt is concatenated with plugin prompt"] = test_append_system_prompt_is_concatenated
+T["PiAsk"]["tools list should always contain read and edit"] = test_append_default_tools
 
 T["PiAskSelection"] = MiniTest.new_set()
 T["PiAskSelection"]["uses nearby context"] = test_selection_uses_nearby_context
